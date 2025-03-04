@@ -1,0 +1,38 @@
+# Core packages
+torch>=1.9.0
+torchvision>=0.10.0
+numpy>=1.19.0
+opencv-python>=4.5.3
+Pillow>=8.3.1
+matplotlib>=3.4.3
+pandas>=1.3.2
+
+# Data processing
+albumentations>=1.0.3
+scikit-learn>=0.24.2
+scikit-image>=0.18.3
+scipy>=1.7.1
+
+# Utilities
+pyyaml>=5.4.1
+tqdm>=4.62.2
+tensorboard>=2.6.0
+mlflow>=1.19.0
+
+# Model export
+onnx>=1.10.1
+
+#For CoreML export (macOS only)
+coremltools>=5.0.0
+
+# Testing
+pytest>=6.2.5
+flake8>=3.9.2
+pytest-cov>=2.12.1
+
+# Optional: for Jupyter notebooks
+jupyter>=1.0.0
+ipywidgets>=7.6.3
+
+# Optional: for distributed training
+ray>=1.5.0

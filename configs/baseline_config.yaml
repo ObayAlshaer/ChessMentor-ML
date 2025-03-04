@@ -1,0 +1,90 @@
+# Experiment configuration
+experiment:
+  name: "chess_board_recognition_baseline"
+  description: "Baseline model for chess board recognition"
+
+# Random seed for reproducibility
+seed: 42
+
+# Dataset configuration
+dataset:
+  train_path: "data/train"
+  val_path: "data/val"
+  test_path: "data/test"
+  train_annotations: "data/train_annotations.json"
+  val_annotations: "data/val_annotations.json"
+  test_annotations: "data/test_annotations.json"
+  annotation_format: "json"  # or "fen", "csv"
+
+# Preprocessing configuration
+preprocessing:
+  image_size: [448, 448]
+  normalize:
+    mean: [0.485, 0.456, 0.406]
+    std: [0.229, 0.224, 0.225]
+
+# Data augmentation
+augmentation:
+  random_rotation: true
+  random_perspective:
+    distortion_scale: 0.5
+    p: 0.5
+  color_jitter:
+    brightness: 0.2
+    contrast: 0.2
+    saturation: 0.2
+
+# DataLoader configuration
+dataloader:
+  batch_size: 16
+  num_workers: 4
+  shuffle: true
+
+# Model configuration
+board_detection:
+  backbone: "resnet50"
+  pretrained: true
+
+piece_classification:
+  backbone: "efficientnet_b0"
+  pretrained: true
+  num_classes: 13  # empty + 6 white + 6 black
+
+# Training configuration
+optimizer:
+  type: "adam"
+  learning_rate: 0.001
+  weight_decay: 0.0001
+
+scheduler:
+  type: "cosine"
+  warmup_epochs: 5
+  T_max: 100
+  eta_min: 0.00001
+
+loss:
+  board_detection_weight: 1.0
+  piece_classification_weight: 1.0
+
+training:
+  num_epochs: 100
+  early_stopping_patience: 15
+  gradient_clip_val: 1.0
+  mixed_precision: true
+
+# Checkpoint configuration
+checkpointing:
+  save_top_k: 3
+  monitor: "val_board_accuracy"
+  mode: "max"
+  save_frequency: 5
+
+# Logging configuration
+logging:
+  log_frequency: 10  # batches
+  confusion_matrix: true
+
+# Deployment configuration
+deployment:
+  format: "coreml"  # or "onnx", "torchscript"
+  optimize_for: "inference_speed"  # or "model_size", "accuracy"
